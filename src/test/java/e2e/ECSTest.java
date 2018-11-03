@@ -68,9 +68,10 @@ public class ECSTest{
 	private void populateBalancedIndices(int[][] tableData){
 		
 		for(int i = 0; i < tableData.length ; i++){
-			String balancedIndex = findBalancedIndex(tableData[i])  < 0 ? null : String.valueOf(findBalancedIndex(tableData[i]));
+			int balancedIndex = findBalancedIndex(tableData[i]);
+			String balancedIndexString = balancedIndex  < 0 ? null : String.valueOf(balancedIndex);
 			String xpath = "//input[@data-test-id = 'submit-" + (i+1) + "']";
-			browser.findElement(By.xpath(xpath)).sendKeys(balancedIndex);
+			browser.findElement(By.xpath(xpath)).sendKeys(balancedIndexString);
 		}
 	}
 	
@@ -79,14 +80,12 @@ public class ECSTest{
 		if(arr.length < 3) 
 			return -1;
 		
-		int leftSum = arr[0], rightSum = 0;
-		for(int i = 2; i < arr.length ; i++){
+		int leftSum = 0, rightSum = 0;
+		for(int i = 1; i < arr.length ; i++){
 			rightSum += arr[i];
 		}
-		if(leftSum == rightSum) 
-			return 1;
 		
-		for(int i = 2; i < arr.length-1 ; i++){
+		for(int i = 1; i < arr.length-1 ; i++){
 			leftSum += arr[i-1];
 			rightSum -= arr[i];
 			if(leftSum == rightSum) 
